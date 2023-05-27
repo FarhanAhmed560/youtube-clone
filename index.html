@@ -1,0 +1,2265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Youtube Clone</title>
+   <link rel="stylesheet" href="/dist/output.css">
+   <link rel="stylesheet" href="/script.js">
+
+   <style>
+      .slides-container {
+	-ms-overflow-style: none; /* Internet Explorer 10+ */
+	scrollbar-width: none; /* Firefox */
+}
+.slides-container::-webkit-scrollbar {
+	display: none; /* Safari and Chrome */
+}
+   </style>
+
+   
+
+</head>
+
+<body class="font-sans bg-gray-50/10">
+
+
+   <nav class=" w-full xl:max-w-7xl mx-auto px-4 py-1 flex justify-between items-center  shadow-sm
+      gap-8 border-gray-200 xl:bg-white bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+      <!-- drawer init and show -->
+      <div class="flex items-center gap-4">
+         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="hidden xl:block w-14 h-14 p-2 rounded-full hover:bg-gray-300 text-black "
+            type="button" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation"
+            aria-controls="drawer-navigation">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+         </svg>
+         <img class=" w-36 h-16" src="img/youtube-logo-png-transparent-image-5.png" alt="youtube-logo">
+      </div>
+
+
+
+
+
+      <!-- drawer component -->
+      
+      <div id="drawer-navigation"
+         class="fixed top-0 left-0 z-50 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-gray-50 dark:bg-gray-800"
+         tabindex="-1" aria-labelledby="drawer-navigation-label">
+         <h5 id="drawer-navigation-label" class="text-base font-semibold text-gray-500 uppercase dark:text-gray-400">
+            Menu</h5>
+         <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+               xmlns="http://www.w3.org/2000/svg">
+               <path fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Close menu</span>
+         </button>
+         <div class="py-4 overflow-y-auto divide-y">
+            <div class="my-2">
+               <ul>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                           <path
+                              d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                           <path
+                              d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                        </svg>
+                        <span class="ml-3 font-medium">Home</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6" src="img/youtube-shorts-logo-15252.svg" alt="youtube-shorts-logo-15252">
+                        <span class="ml-3 font-medium">Shorts</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                        </svg>
+                        <span class="ml-3 font-medium">Subscriptions</span>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+            <div class="my-2">
+               <ul class="mt-2">
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+                        </svg>
+                        <span class="ml-3 font-medium">Building Library</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="flex-1 ml-3 font-medium">Watch Later</span>
+                        <span
+                           class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round"
+                              d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+                        </svg>
+                        <span class="flex-1 ml-3 font-medium">Yours Videos</span>
+                        <span class="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full
+                            dark:bg-blue-900 dark:text-blue-300">9</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z" />
+                        </svg>
+                        <span class="ml-3 font-medium">Likes Videos</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6" src="img/timer-outline.svg" alt="timer-outline">
+                        <span class="ml-3 font-medium">History</span>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+            <div class="mb-2">
+               <h1 class="ml-2 text-xl font-medium mt-2">Subscriptions</h1>
+               <ul class="mt-2">
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/sp3.jpg" alt="sp3">
+                        <span class="flex-1 ml-3 font-medium">Usman Gaming</span>
+                        <span class="inline-flex items-center justify-center w-6 h-6 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                              class="w-6 h-6 text-orange-300">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.008v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                           </svg>
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/download.png" alt="vicky-gaming">
+                        <span class="flex-1 ml-3 font-medium">Vicky Gaming</span>
+                        <span class="inline-flex items-center justify-center w-6 h-6 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                              class="w-6 h-6 text-orange-300">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.008v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                           </svg>
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/sp1.jpg" alt="sp1">
+                        <span class="flex-1 ml-3 font-medium">SP Gaming</span>
+                        <span class="inline-flex items-center justify-center w-6 h-6 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                              class="w-6 h-6 text-orange-300">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75
+                              6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.00
+                              8v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                           </svg>
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/user-1.avif" alt="user-1">
+                        <span class="flex-1 ml-3 font-medium">TV Channel</span>
+                        <span class="inline-flex items-center justify-center w-6 h-6 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                              class="w-6 h-6 text-orange-300">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75
+                              6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.00
+                              8v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                           </svg>
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/sp4.jpg" alt="sp4">
+                        <span class="flex-1 ml-3 font-medium">Cocomelen</span>
+                        <span class="inline-flex items-center justify-center w-6 h-6 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                              class="w-6 h-6 text-orange-300">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75
+                              6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.00
+                              8v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                           </svg>
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/sp7.jpg" alt="sp7">
+                        <span class="flex-1 ml-3 font-medium"> Intelegence</span>
+                        <span class="inline-flex items-center justify-center w-6 h-6 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                              class="w-6 h-6 text-orange-300">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75
+                              6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.00
+                              8v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                           </svg>
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/sp5.jpg" alt="sp5">
+                        <span class="flex-1 ml-3 font-medium"> M.Ibrahim</span>
+                        <span class="inline-flex items-center justify-center w-6 h-6 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                              class="w-6 h-6 text-orange-300">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75
+                              6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.00
+                              8v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                           </svg>
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/aajnew.jpg" alt="aajnew">
+                        <span class="flex-1 ml-3 font-medium">AJJ News</span>
+                        <span class="inline-flex items-center justify-center w-1 h-1 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><img class="mr-5 rounded-full" src="img/blueimg.png"
+                              alt="blueimg">
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/sp8.jpg" alt="sp8">
+                        <span class="flex-1 ml-3 font-medium">Geo News</span>
+                        <span class="inline-flex items-center justify-center w-1 h-1 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><img class="mr-5 rounded-full" src="img/blueimg.png"
+                              alt="blueimg">
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/sp9.jpg" alt="sp9">
+                        <span class="flex-1 ml-3 font-medium">MES Servies</span>
+                        <span class="inline-flex items-center justify-center w-1 h-1 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><img class="mr-5 rounded-full" src="img/blueimg.png"
+                              alt="blueimg">
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/sp2.jpg" alt="sp2">
+                        <span class="flex-1 ml-3 font-medium">ISI Intelegence</span>
+                        <span class="inline-flex items-center justify-center w-1 h-1 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><img class="mr-5 rounded-full" src="img/blueimg.png"
+                              alt="blueimg">
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6 rounded-full" src="img/green dot.jpg" alt="green">
+                        <span class="flex-1 ml-3 font-medium">Green Tv</span>
+                        <span class="inline-flex items-center justify-center w-1 h-1 ml-3 text-sm font-medium text-blue-800  rounded-full
+                            dark:bg-blue-900 dark:text-blue-300"><img class="mr-5 rounded-full" src="img/blueimg.png"
+                              alt="blueimg">
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                        <span class="flex-1 ml-3 font-medium">Show 55 more</span>
+
+                     </a>
+                  </li>
+               </ul>
+
+            </div>
+            <div class="my-2">
+               <h2 class="ml-2 text-xl font-medium mt-2">Explore</h2>
+               <ul class="mt-2">
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+                        </svg>
+                        <span class="ml-3 font-medium">Trending</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+                        </svg>
+                        <span class="ml-3 font-medium">Music</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M14.25 6.087c0-.355.186-.676.401-.959.221-.29.349-.634.349-1.003 0-1.036-1.007-1.875-2.25-1.875s-2.25.84-2.25 1.875c0 .369.128.713.349 1.003.215.283.401.604.401.959v0a.64.64 0 01-.657.643 48.39 48.39 0 01-4.163-.3c.186 1.613.293 3.25.315 4.907a.656.656 0 01-.658.663v0c-.355 0-.676-.186-.959-.401a1.647 1.647 0 00-1.003-.349c-1.036 0-1.875 1.007-1.875 2.25s.84 2.25 1.875 2.25c.369 0 .713-.128 1.003-.349.283-.215.604-.401.959-.401v0c.31 0 .555.26.532.57a48.039 48.039 0 01-.642 5.056c1.518.19 3.058.309 4.616.354a.64.64 0 00.657-.643v0c0-.355-.186-.676-.401-.959a1.647 1.647 0 01-.349-1.003c0-1.035 1.008-1.875 2.25-1.875 1.243 0 2.25.84 2.25 1.875 0 .369-.128.713-.349 1.003-.215.283-.4.604-.4.959v0c0 .333.277.599.61.58a48.1 48.1 0 005.427-.63 48.05 48.05 0 00.582-4.717.532.532 0 00-.533-.57v0c-.355 0-.676.186-.959.401-.29.221-.634.349-1.003.349-1.035 0-1.875-1.007-1.875-2.25s.84-2.25 1.875-2.25c.37 0 .713.128 1.003.349.283.215.604.401.96.401v0a.656.656 0 00.658-.663 48.422 48.422 0 00-.37-5.36c-1.886.342-3.81.574-5.766.689a.578.578 0 01-.61-.58v0z" />
+                        </svg>
+                        <span class="ml-3 font-medium">Gaming</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
+                        </svg>
+                        <span class="ml-3 font-medium">News</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6" src="img/tennisball-outline.svg" alt="tennisball-outline">
+                        <span class="ml-3 font-medium">Sports</span>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+            <div class="my-2">
+               <h2 class="ml-2 text-xl font-medium mt-2">More form YouTube</h2>
+               <ul class="mt-2">
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6" src="img/YouTube_Studio_icon_2021.webp" alt="2980836-middle">
+                        <span class="ml-3 font-medium">YouTube Studio</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6" src="img/youtube-kids.webp" alt="youtube-kids">
+                        <span class="ml-3 font-medium">YouTube Kids</span>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+
+            <div class="my-2">
+               <ul class="mt-2">
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z" />
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+
+                        <span class="ml-3 font-medium">Settings</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
+                        </svg>
+                        <span class="ml-3 font-medium">Report History</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                        </svg>
+                        <span class="ml-3 font-medium">Help</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="#"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <img class="w-6 h-6" src="img/sendfeedback.png" alt="sendfeedback">
+                        <span class="ml-3 font-medium">Send FeedBack</span>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+            <div>
+               <div class="mt-2 mb-5 ">
+
+                  <ul class="flex items-center mt-2">
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">About</a></li>
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">Press</a></li>
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">Copyright</a></li>
+                  </ul>
+                  <ul class="flex items-center">
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">Content us</a></li>
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">Creator</a></li>
+                  </ul>
+                  <ul class="flex items-center">
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">Advertise</a></li>
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">Developers</a></li>
+                  </ul>
+               </div>
+               <div>
+                  <ul class="flex items-center">
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">Terms</a></li>
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">Privacy</a></li>
+                  </ul>
+                  <ul class="flex items-center">
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">Policy & Safety</a></li>
+                  </ul>
+                  <ul class="flex items-center">
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">How YouTube Works</a>
+                     </li>
+
+                  </ul>
+                  <ul class="flex items-center">
+                     <li><a class=" p-2 text-sm font-medium text-gray-900 rounded-lg" href="#">Test News features </a>
+                     </li>
+                  </ul>
+               </div>
+               <footer>
+                  <div>
+                     <p class="text-xs p-2 font-medium text-gray-400 rounded-lg">© 2023 Google LLC YouTube, a Google
+                        company</p>
+                  </div>
+               </footer>
+            </div>
+         </div>
+      </div>
+
+      <div class="w-2/4 hidden xl:flex items-center gap-4 bg-gray-50 xl:bg-white">
+         <div class="w-full flex items-center">
+            <input
+               class="px-6 py-2 text-2xl w-full h-12 rounded-tl-3xl rounded-bl-3xl border border-gray-300  bg-white/90"
+               type="text" name="text" id="text" placeholder="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+               class="w-12 h-12 bg-gray-100 hover:bg-gray-300  px-2 py-2 rounded-tr-3xl rounded-br-3xl border border-l-0 border-gray-300">
+               <path fill-rule="evenodd"
+                  d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                  clip-rule="evenodd" />
+            </svg>
+
+         </div>
+         <div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+               class="w-12 h-12 p-2 rounded-full hover:bg-gray-300 ">
+               <path d="M8.25 4.5a3.75 3.75 0 117.5 0v8.25a3.75 3.75 0 11-7.5 0V4.5z" />
+               <path
+                  d="M6 10.5a.75.75 0 01.75.75v1.5a5.25 5.25 0 1010.5 0v-1.5a.75.75 0 011.5 0v1.5a6.751 6.751 0 01-6 6.709v2.291h3a.75.75 0 010 1.5h-7.5a.75.75 0 010-1.5h3v-2.291a6.751 6.751 0 01-6-6.709v-1.5A.75.75 0 016 10.5z" />
+            </svg>
+         </div>
+      </div>
+
+      <div class=" flex items-center gap-4">
+         <div class="hidden xl:block">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="w-12 h-12 rounded-full p-2 hover:bg-gray-300">
+               <path stroke-linecap="round"
+                  d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+            </svg>
+         </div>
+         <div class="xl:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="w-12 h-12 rounded-full p-2 hover:bg-gray-300">
+               <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+            </svg>
+         </div>
+         <div class="relative hidden xl:block">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class=" w-12 h-12 rounded-full p-2 hover:bg-gray-300">
+               <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+            </svg>
+            <span
+               class="absolute top-0 -right-1 text-white text-sm border-4 border-white bg-red-700 w-7 h-7 text-center rounded-full">9+</span>
+         </div>
+         <div>
+            <img class="w-12 h-12 rounded-full" src="img/267515704_4547233698728209_780607736064547376_n.jpg"
+               alt="farhan">
+         </div>
+      </div>
+
+
+
+   </nav>
+
+   
+   <div class=" max-w-7xl mx-auto divide-y-4">
+      <div class="max-w-7xl mx-auto mb-10">
+         <!-- xl screen icon+name -->
+         <div class="hidden xl:block relative  w-20">
+
+            <div class="absolute top-4 left-0">
+               <ul class="">
+                  <li class="flex flex-col  items-center justify-center px-3 py-6 rounded-2xl hover:bg-gray-100">
+                     <a class="mb-2" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                           fill="currentColor" class="w-6 h-6">
+                           <path
+                              d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                           <path
+                              d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                        </svg>
+                     </a>
+                     <span class="text-xs ">Home</span>
+                  </li>
+                  <li class="flex flex-col items-center justify-center px-3 py-6 rounded-2xl hover:bg-gray-100">
+                     <a class="mb-2" href="#">
+                        <img class="w-6 h-6" src="img/youtube-shorts-logo-15252.svg" alt="youtube-shorts-logo-15252">
+                     </a>
+                     <span class="text-xs ">Shorts</span>
+                  </li>
+                  <li class=" flex flex-col items-center justify-center px-3 py-6 rounded-2xl hover:bg-gray-100">
+                     <a class="mb-2" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                        </svg>
+                     </a>
+                     <span class="text-xs ">Subscriptions</span>
+                  </li>
+                  <li class="flex flex-col items-center justify-center px-3 py-6 rounded-2xl hover:bg-gray-100">
+                     <a class="mb-2" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                           stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+                        </svg></a>
+                     <span class="text-xs ">Library</span>
+                  </li>
+               </ul>
+
+            </div>
+
+
+         </div>
+
+         <!-- sm screen icon+name -->
+         <div class="xl:hidden">
+
+            <div class="w-full xl:max-w-7xl fixed z-40 bottom-0 ">
+               <ul class="w-full flex items-center justify-around bg-gray-100">
+                  <li class="flex flex-col  items-center justify-center px-4 py-1 rounded-xl hover:bg-gray-50">
+                     <a class="mb-2" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                           fill="currentColor" class="w-6 h-6">
+                           <path
+                              d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                           <path
+                              d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                        </svg>
+                     </a>
+                     <span class="text-xs ">Home</span>
+                  </li>
+                  <li class="flex flex-col items-center justify-center px-4 py-1 rounded-xl hover:bg-gray-50">
+                     <a class="mb-2" href="#">
+                        <img class="w-6 h-6" src="img/youtube-shorts-logo-15252.svg" alt="youtube-shorts-logo-15252">
+                     </a>
+                     <span class="text-xs ">Shorts</span>
+                  </li>
+                  <li class=" flex flex-col items-center justify-center px-4 py-1 rounded-xl hover:bg-gray-50">
+                     <a class="mb-2" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                           stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                        </svg>
+                     </a>
+                     <span class="text-xs ">Subscriptions</span>
+                  </li>
+                  <li class="flex flex-col items-center justify-center px-4 py-1 rounded-xl hover:bg-gray-50">
+                     <a class="mb-2" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                           stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+                        </svg></a>
+                     <span class="text-xs ">Library</span>
+                  </li>
+               </ul>
+
+            </div>
+
+
+         </div>
+
+         <!-- carousel -->
+          
+         <div class="flex items-center justify-center w-full xl:w-11/12 h-full  xl:ml-28 sm:py-4 py-2 xl:px-1 pl-2 xl:pl-0">
+      <div class="w-full relative flex items-center justify-center">
+         <button aria-label="slide backward" class="absolute z-30 left-2  cursor-pointer" id="prev">
+            <svg class="dark:text-gray-900 w-8 h-8 p-2 rounded-full bg-white border border-gray-600" width="8" height="14" viewBox="0 0 8 14" fill="none"
+               xmlns="http://www.w3.org/2000/svg">
+               <path d="M7 1L1 7L7 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+            </svg>
+         </button>
+         <div class="w-full h-10 mx-auto overflow-x-hidden overflow-y-hidden">
+            <div id="slider"
+               class="h-full flex  gap-2 items-center justify-start transition ease-out duration-700">
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">All</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">HTML</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">CSS</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">JS</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Music</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Gaming</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">LIVE</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">News</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Mixes</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Reacts</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Movies</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Cricket</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Football</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Snooker</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Adventure</a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Golf </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">R2H </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">New </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Nori </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Ballon </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Chiken </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#"> Video </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Age </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Height </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#"> Scroll </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Animation </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#"> Chairs </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#"> Legends </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#"> Atif </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#"> NFAK </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Sidhu </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Tollywood </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#"> Hollywood </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#"> Songs </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Car Upgrade </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#"> bike Lover </a>
+               </div>
+               <div class="flex relative w-full sm:w-auto">
+                  <a class="px-4 py-2 rounded-xl bg-gray-100 hover:bg-gray-300" href="#">Pathaan </a>
+               </div>
+
+            </div>
+         </div>
+         <button aria-label="slide forward"
+            class="absolute z-30 right-0 mr-2  "
+            id="next">
+            <svg class="dark:text-gray-900 w-8 h-8 p-2 rounded-full bg-white border border-gray-600" width="8" height="14" viewBox="0 0 8 14" fill="none"
+               xmlns="http://www.w3.org/2000/svg">
+               <path d="M1 1L7 7L1 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+            </svg>
+         </button>
+      </div>
+   </div>  
+
+
+         <!-- section images -->
+         <div class="xl:ml-28 ">
+            <div
+               class="  my-3 xl:my-6 grid xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-4 gap-2 xl:px-0 sm:px-2">
+               <!-- 1st image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/headline3.jpg" alt="headline3">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">11:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>13K Views . 48 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+
+
+               </div>
+               <!-- 2 image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/screen-2.webp" alt="screen-2">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">08:52</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full " src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistan Suprem Court ki taraf sy Imran
+                                 Khan ko
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>11K Views . 28 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+
+               <!-- 3rd  image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/headline7.jpg" alt="headline7">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">25:12</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>10K Views . 38 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+               <!-- 4rd  image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/screen-2.webp" alt="headline6">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">40:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>33K Views . 18 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+
+               <!-- 5rd  image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/images.jpg" alt="headline2">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">15:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>3K Views . 8 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+               </div>
+
+               <!-- 6th  image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/headline7.jpg" alt="headline7">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">19:32</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold "> Mian Shahbaz & Main Nawaz Shareef Punjab
+                                 ..</h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>3K Views . 11 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+               <!-- 7th image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <a href="#"><img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                           src="img/headline3.jpg" alt="headline3"></a>
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">11:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>13K Views . 48 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+
+
+               </div>
+               <!-- 8th image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/screen-2.webp" alt="screen-2">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">32:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistan Suprem Court ki taraf sy Imran
+                                 Khan ko
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>11K Views . 28 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+
+               <!-- 9rd  image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/headline7.jpg" alt="headline7">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">11:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>10K Views . 38 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+               <!-- 10 image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/headline3.jpg" alt="headline3">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">11:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>13K Views . 48 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+
+
+               </div>
+               <!-- 11 image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/screen-2.webp" alt="screen-2">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">08:52</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full " src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistan Suprem Court ki taraf sy Imran
+                                 Khan ko
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>11K Views . 28 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+               <!-- 12  image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/images.jpg" alt="headline2">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">15:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>3K Views . 8 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+
+
+
+      <!-- section shorts -->
+      <div class="max-w-7xl mx-auto ">
+         <div class="xl:ml-28">
+            <div class="my-6">
+               <div class="flex items-center justify-between px-2 xl:px-0">
+                  <div class="flex items-center gap-2">
+                     <img class="w-10 h-10 bg-red-300" src="img/youtube-shorts5863.jpg" alt="Shorts">
+                     <h1 class="text-3xl">Shorts</h1>
+                  </div>
+                  <div class="p-2 rounded-full hover:bg-gray-300">
+                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                           stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                     </a>
+                  </div>
+               </div>
+
+
+               <div class="max-w-7xl mx-auto xl:ml-0 ml-2 text-neutral-900">
+                  <div id="app" class="py-12 transition-all duration-500 ease-linear">
+                     <div class="relative">
+                        <div class="slides-container h-full flex snap-x snap-mandatory overflow-hidden overflow-x-auto space-x-2
+                         rounded scroll-smooth ">
+                         <!-- image1 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                                 <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                    <img src="img/unsplash.jpg" alt="unsplash"
+                                       class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                                 </div>
+                                 <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                    <div class="">
+                                       <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                          <h1>Artificial Picture</h1>
+                                       </a>
+                                       <a class="text-xs" href="#"><span>65K Views</span></a>
+                                    </div>
+                                    <div>
+                                       <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                             <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                          </svg>
+                                       </a>
+                                    </div>
+                                 </div>
+                            
+                           </div>
+                           <!-- image2 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/unsplash1.jpg" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Artificial Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>285K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- image 3 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/unsplash2.jpg" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Artificial Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>815K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- image 4 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/unsplash3.jpg" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Artificial Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>857K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- image 5 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/unsplash4.jpg" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Artificial Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>855K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- image 6 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/user-1.avif" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Human Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>285K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- image 7 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/user-2.avif" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Human Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>985K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- image8 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/user-3.avif" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Human Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>805K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- image 9 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/user-5.avif" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Artificial Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>835K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- image10 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/user-4.avif" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Artificial Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>185K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- image11 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/user-6.avif" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Artificial Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>850K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- image12 -->
+                           <div class="relative slide flex flex-col  flex-shrink-0 snap-center rounded overflow-hidden">
+                             
+                              <div class=" flex flex-shrink-0  w-full sm:w-auto">
+                                 <img src="img/unsplash1.jpg" alt="unsplash"
+                                    class=" sm:w-44 sm:h-60 w-32 h-56 rounded-2xl mb-2" />
+                              </div>
+                              <div class="absolute bottom-4 left-0 px-2 sm:w-44 flex justify-between text-white ">
+                                 <div class="">
+                                    <a class="sm:text-lg text-xs  font-semibold" href="#">
+                                       <h1>Artificial Picture</h1>
+                                    </a>
+                                    <a class="text-xs" href="#"><span>845K Views</span></a>
+                                 </div>
+                                 <div>
+                                    <a class="" href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                          viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round"
+                                             d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                                       </svg>
+                                    </a>
+                                 </div>
+                              </div>
+                           </div>
+                          </div>
+               
+                        <div class="absolute top-0 xl:left-4 left-3 h-full items-center flex">
+                           <button role="button" class="prev px-2 py-2 rounded-full bg-neutral-100 text-neutral-900 group" aria-label="prev"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 group-active:-translate-x-2 transition-all duration-200 ease-linear">
+                                 <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                              </svg>
+               
+                           </button>
+                        </div>
+                        <div class="absolute top-0 xl:right-4 right-3 h-full items-center flex">
+                           <button role="button" class="next px-2 py-2 rounded-full bg-neutral-100 text-neutral-900 group" aria-label="next"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 group-active:translate-x-2 transition-all duration-200 ease-linear">
+                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                              </svg>
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            
+
+
+
+
+            </div>
+         </div>
+      </div>
+
+               
+      <!-- section images -->
+      <div class="max-w-7xl mx-auto ">
+         <div class="xl:ml-28">
+            <div
+               class=" my-6  grid xl:grid-cols-3 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-4 gap-2 xl:px-0 sm:px-2">
+               <!-- 13 image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full l sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/headline3.jpg" alt="headline3">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">11:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>13K Views . 48 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+
+
+               </div>
+               <!-- 14 image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full  sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/screen-2.webp" alt="screen-2">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">08:52</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full " src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistan Suprem Court ki taraf sy Imran
+                                 Khan ko ...
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>11K Views . 28 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+
+               <!-- 15  image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/headline7.jpg" alt="headline7">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">25:12</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>10K Views . 38 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+               <!-- 16  image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full  sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/screen-2.webp" alt="headline6">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">40:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>33K Views . 18 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+
+               <!-- 17  image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/images.jpg" alt="headline2">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">15:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>3K Views . 8 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+               </div>
+
+               <!-- 18  image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/headline7.jpg" alt="headline7">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">19:32</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold "> Mian Shahbaz & Main Nawaz Shareef Punjab
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>3K Views . 11 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="w-5">
+                        <a href="#"><svg xmlns="http:/w.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+               <!-- 19 image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <a href="#"><img class="w-full h-full  sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                           src="img/headline3.jpg" alt="headline3"></a>
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">11:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistani Army Statment important
+                                 telecomunication
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>13K Views . 48 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+
+
+               </div>
+               <!-- 20 image -->
+               <div class=" mb-4">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full  sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/screen-2.webp" alt="screen-2">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">32:02</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full" src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistan Suprem Court ki taraf sy Imran
+                                 Khan ko ...
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>11K Views . 28 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+               <!-- 21 image -->
+               <div class=" mb-10">
+                  <div class="mb-3 relative">
+                     <img class="w-full h-full  sm:rounded-xl hover:rounded-none  duration-300 ease-out"
+                        src="img/screen-2.webp" alt="screen-2">
+                     <a class="absolute bottom-2 right-2 text-white bg-black p-1 rounded-md" href="#"><span
+                           class="">08:52</span></a>
+                  </div>
+                  <div class="flex justify-between gap-2 px-2 xl:px-0">
+                     <div class="">
+                        <a class="" href="#"><img class="w-8 h-8 mr-2 rounded-full " src="img/dawn-new.png"
+                              alt="dawn-new"></a>
+                     </div>
+
+                     <div class="">
+                        <div>
+                           <a href="#">
+                              <h1 class="text-base sm:text-lg font-semibold  ">Pakistan Suprem Court ki taraf sy Imran
+                                 Khan ko ...
+                              </h1>
+                           </a>
+                        </div>
+                        <div class="flex items-center gap-2 ">
+                           <a href="#">DAWN NEWS</a><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                              fill="currentColor" class="w-5 h-5">
+                              <path fill-rule="evenodd"
+                                 d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                 clip-rule="evenodd" />
+                           </svg>
+
+                        </div>
+                        <div class="text-xs sm:text-base ">
+                           <a href="#"><span>11K Views . 28 minutes ago</span></a>
+                        </div>
+                     </div>
+
+
+                     <div class="">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                              stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                              <path stroke-linecap="round" stroke-linejoin="round"
+                                 d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+                           </svg></a>
+                     </div>
+
+
+                  </div>
+
+               </div>
+
+
+            </div>
+         </div>
+      </div>
+
+   </div>
+
+
+
+
+
+  
+
+
+</body>
+
+</html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+
+<script>let defaultTransform = 0;
+   function goNext() {
+      defaultTransform = defaultTransform - 398;
+      var slider = document.getElementById("slider");
+      if (Math.abs(defaultTransform) >= slider.scrollWidth / 1.7) defaultTransform = 0;
+      slider.style.transform = "translateX(" + defaultTransform + "px)";
+   }
+   next.addEventListener("click", goNext);
+   function goPrev() {
+      var slider = document.getElementById("slider");
+      if (Math.abs(defaultTransform) === 0) defaultTransform = 0;
+      else defaultTransform = defaultTransform + 398;
+      slider.style.transform = "translateX(" + defaultTransform + "px)";
+   }
+   prev.addEventListener("click", goPrev);
+</script>
+
+
+<script>
+   tailwind.config = {
+      theme: {
+         extend: {
+            fontFamily: {
+               cabinetGrotesk: "'Cabinet Grotesk', san-serif",
+            }
+         }
+      }
+   }
+</script>
+
+<script>
+   const slidesContainer = document.querySelector(".slides-container");
+const slideWidth = slidesContainer.querySelector(".slide").clientWidth;
+const prevButton = document.querySelector(".prev");
+const nextButton = document.querySelector(".next");
+
+nextButton.addEventListener("click", () => {
+	slidesContainer.scrollLeft += slideWidth;
+});
+
+prevButton.addEventListener("click", () => {
+	slidesContainer.scrollLeft -= slideWidth;
+});
+</script>
